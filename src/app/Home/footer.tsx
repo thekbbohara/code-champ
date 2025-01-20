@@ -13,8 +13,8 @@ const Footer = () => {
       </div>
     </div>
     <div className="flex gap-4">
-      <div className="bg-[#1e293b] w-8 h-8 rounded-lg flex items-center justify-center"><XIcon /></div>
-      <div className="bg-[#1e293b] w-8 h-8 rounded-lg flex items-center justify-center"><Github /></div>
+      <a href="https://x.com/thekbbohara" className="bg-[#1e293b] w-8 h-8 rounded-lg flex items-center justify-center"><XIcon /></a>
+      <a href="https://github.com/thekbbohara/code-champ" className="bg-[#1e293b] w-8 h-8 rounded-lg flex items-center justify-center"><Github /></a>
     </div>
   </footer>)
 }
