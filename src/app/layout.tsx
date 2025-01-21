@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AuthProvider } from "./auth/auth-provider";
 
 export const metadata: Metadata = {
   title: "Code champ",
@@ -13,7 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full">
-      <body className="bg-black text-white h-full">{children}</body>
+      <body className="bg-black font-mono text-white h-full min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-fixed ">
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   );
 }

@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button"
-import Image from "next/image"
+import { CodeChamp } from "@/components/common/codeChamp"
+import Link from "next/link"
 
 const Hero = () => {
   return (
@@ -7,11 +7,12 @@ const Hero = () => {
       <div className="my-auto flex flex-col gap-4">
         <h1 className="font-bold text-[46px] leading-9 text-gray-200"><strong>Master Technical Interviews Through Real Competition</strong></h1>
         <h2 className="text-gray-400 font-medium">Practical coding challenges in real-time battles against other developers. Win tokens, build confidence, and land your dream job.</h2>
-        <Button className="bg-white w-fit text-black font-medium text-[18px] p-2">
+
+        <Link href={"/auth"} className=" w-fit bg-white px-3 py-2 rounded-md font-semibold text-gray-700" >
           Start Competing
-        </Button>
+        </Link>
       </div>
-      <Image src={"/code-champ.png"} alt="code-champ" height={250} width={350} />
+      <CodeChamp height={250} width={350} />
     </section>
   )
 }
