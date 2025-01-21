@@ -19,7 +19,7 @@ export function ComingSoon({ userEmail }: { userEmail: string }) {
     seconds: 0,
   });
 
-  const launchDate = new Date("2025-02-17T00:00:00").getTime(); // Adjust the launch date
+  const launchDate = new Date("2025-02-17T00:00:00").getTime();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -74,7 +74,7 @@ export function ComingSoon({ userEmail }: { userEmail: string }) {
         </div>
 
         {/* Main heading */}
-        <h1 className="text-6xl md:text-7xl font-bold text-gray-200 mb-8 text-center">
+        <h1 className="text-3xl sm:text-6xl md:text-7xl font-bold text-gray-200 mb-8 text-center">
           Pre-Register Now
         </h1>
 
