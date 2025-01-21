@@ -129,7 +129,8 @@ export function ComingSoon({ userEmail }: { userEmail: string }) {
         {/* Subheading */}
         <p className="text-gray-300 text-center mb-16">
           Be the first to know when we launch!<br />
-          Pre-register today to receive product updates and{" "}
+          Pre-register today to receive product updates.<br />
+          Get beta access and{" "}
           <span className="text-blue-400 font-bold">free tokens</span> at
           launch.
         </p>
