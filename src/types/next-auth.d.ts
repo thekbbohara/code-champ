@@ -8,7 +8,7 @@ declare module "next-auth" {
       id: string;
       name?: string;
       email: string | null;
-      avatar?: string | null;
+      avatar_url?: string | null;
       username: string;
     } & DefaultSession["user"];
   }
@@ -18,7 +18,7 @@ declare module "next-auth" {
     id: string; // GitHub user ID
     name: string; // GitHub user name
     email: string | null; // User's email
-    avatar: string | null; // Avatar URL
+    avatar_url: string | null; // Avatar URL
     username: string; // GitHub username (login)
   }
 

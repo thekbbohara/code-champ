@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -7,8 +8,9 @@ import { Send, Twitter, Instagram } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export function ComingSoon({ userEmail }: { userEmail: string }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPreRegistered, setIsPreRegistered] = useState<null | boolean>(null);
   const [email, setEmail] = useState(userEmail ?? "");
-  const [isRegistered, setIsRegistered] = useState(false);
   const { toast } = useToast();
 
   const [timeLeft, setTimeLeft] = useState({
@@ -20,6 +22,28 @@ export function ComingSoon({ userEmail }: { userEmail: string }) {
 
   const launchDate = new Date("2025-02-17T00:00:00").getTime();
 
+  // Check if the user is pre-registered
+  useEffect(() => {
+    if (!email) return;
+    const checkPreRegistration = async () => {
+      try {
+        const response = await fetch(`/api/pre-register?email=${email}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          setIsPreRegistered(data.isPreRegistered);
+        } else {
+          console.error("Failed to fetch pre-registration status:", data.error);
+        }
+      } catch (error) {
+        console.error("Error checking pre-registration:", error);
+      }
+    };
+
+    checkPreRegistration();
+  }, [email]);
+
+  // Countdown timer
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date().getTime();
@@ -41,25 +65,50 @@ export function ComingSoon({ userEmail }: { userEmail: string }) {
     return () => clearInterval(timer);
   }, [launchDate]);
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
-    setIsRegistered(true);
-    toast({
-      title: "Registration Successful!",
-      description: "You’re all set! Updates and tokens will be yours upon release.",
-    });
-    setEmail("");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/pre-register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsPreRegistered(true);
+        toast({
+          title: "Registration Successful!",
+          description:
+            "You’re all set! Updates and tokens will be yours upon release.",
+        });
+        setEmail("");
+      } else {
+        toast({
+          title: "Registration Failed",
+          description: data.error || "Something went wrong.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+      toast({
+        title: "Registration Failed",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <main className=" relative overflow-hidden">
-      {/* Decorative planets */}
-      {/**
-      <div className="absolute left-0 bottom-0 w-64 h-64 bg-gradient-to-br from-gray-600 to-gray-700 rounded-full blur-2xl opacity-20 -translate-x-1/2 translate-y-1/2" />
-      <div className="absolute right-0 top-0 w-96 h-96 bg-gradient-to-br from-gray-700 to-gray-800 rounded-full blur-3xl opacity-20 translate-x-1/2 -translate-y-1/2" />
-        */}
+    <main className="relative overflow-hidden">
       {/* Content container */}
       <div className="container mx-auto px-4 min-h-screen flex flex-col items-center justify-center relative z-10">
         {/* Beta badge */}
@@ -79,8 +128,10 @@ export function ComingSoon({ userEmail }: { userEmail: string }) {
 
         {/* Subheading */}
         <p className="text-gray-300 text-center mb-16">
-          Be the first to know when we launch!<br />Pre-register today to receive
-          product updates and <span className="text-blue-400 font-bold">free tokens</span> at launch.
+          Be the first to know when we launch!<br />
+          Pre-register today to receive product updates and{" "}
+          <span className="text-blue-400 font-bold">free tokens</span> at
+          launch.
         </p>
 
         {/* Countdown */}
@@ -104,7 +155,7 @@ export function ComingSoon({ userEmail }: { userEmail: string }) {
         </div>
 
         {/* Pre-Register form */}
-        {!isRegistered ? (
+        {isPreRegistered === false && (
           <div className="w-full max-w-md mb-12">
             <p className="text-gray-300 text-center mb-4">
               Enter your email to pre-register:
@@ -115,14 +166,20 @@ export function ComingSoon({ userEmail }: { userEmail: string }) {
                 placeholder="Enter your email..."
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-gray-800/30 border-gray-700/30 text-white placeholder:text-gray-500"
+                className="bg-gray-800/30 border-gray-700/30 text-white placeholder:text-gray-500 outline-transparent"
+                disabled
               />
-              <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
-                Pre-Register
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                {isLoading ? "Loading..." : "Pre-register"}
               </Button>
             </form>
           </div>
-        ) : (
+        )}
+        {isPreRegistered === true && (
           <div className="text-center mb-12">
             <h2 className="text-2xl font-bold text-blue-400 mb-4">
               You&#39;re Pre-Registered!
@@ -132,7 +189,6 @@ export function ComingSoon({ userEmail }: { userEmail: string }) {
             </p>
           </div>
         )}
-
         {/* Contact info */}
         <p className="text-gray-400 mb-4 text-center">
           If you have any questions, please contact us at:

@@ -1,0 +1,285 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String          @id @default(cuid())
+  name            String?
+  email           String          @unique
+  username        String          @unique
+  avatarUrl       String?
+  password        String
+  tokens          Int             @default(0)
+  preferences     Preference[]
+  createdAt       DateTime        @default(now()) @map("created_at")
+  rooms           Room[]          @relation("RoomOwner")
+  transactions    Transaction[]
+  participants    Participant[]
+  solutions       Solution[]
+  isPreRegistered Boolean         @default(false) @map("is_pre_registered")
+  sentDMs         DirectMessage[] @relation("SentDMs")
+  receivedDMs     DirectMessage[] @relation("ReceivedDMs")
+  globalMessages  GlobalMessage[]
+  roomMessages    RoomMessage[]
+  proMessages     ProMessage[]
+  dmMessages      DMMessage[]
+
+  @@index([email])
+  @@index([createdAt])
+}
+
+model GlobalChat {
+  id        String          @id @default(cuid())
+  messages  GlobalMessage[]
+  createdAt DateTime        @default(now()) @map("created_at")
+}
+
+model GlobalMessage {
+  id           String      @id @default(cuid())
+  content      String
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
+  type         MessageType
+  metadata     Json?
+  globalChat   GlobalChat  @relation(fields: [globalChatId], references: [id])
+  globalChatId String
+  createdAt    DateTime    @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([globalChatId])
+  @@index([createdAt])
+}
+
+model RoomMessage {
+  id         String      @id @default(cuid())
+  content    String
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  type       MessageType
+  metadata   Json?
+  roomChat   RoomChat    @relation(fields: [roomChatId], references: [id])
+  roomChatId String
+  createdAt  DateTime    @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([roomChatId])
+  @@index([createdAt])
+}
+
+model ProChat {
+  id        String       @id @default(cuid())
+  messages  ProMessage[]
+  createdAt DateTime     @default(now()) @map("created_at")
+}
+
+model ProMessage {
+  id        String      @id @default(cuid())
+  content   String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  type      MessageType
+  metadata  Json?
+  proChat   ProChat     @relation(fields: [proChatId], references: [id])
+  proChatId String
+  createdAt DateTime    @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([proChatId])
+  @@index([createdAt])
+}
+
+model DirectMessage {
+  id          String      @id @default(cuid())
+  sender      User        @relation("SentDMs", fields: [senderId], references: [id])
+  senderId    String
+  recipient   User        @relation("ReceivedDMs", fields: [recipientId], references: [id])
+  recipientId String
+  messages    DMMessage[]
+  createdAt   DateTime    @default(now()) @map("created_at")
+
+  @@index([senderId])
+  @@index([recipientId])
+}
+
+model DMMessage {
+  id              String        @id @default(cuid())
+  content         String
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String
+  type            MessageType
+  metadata        Json?
+  directMessage   DirectMessage @relation(fields: [directMessageId], references: [id])
+  directMessageId String
+  createdAt       DateTime      @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([directMessageId])
+  @@index([createdAt])
+}
+
+model Preference {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  key       String
+  value     String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+}
+
+model Room {
+  id           String        @id @default(cuid())
+  createdBy    User          @relation("RoomOwner", fields: [userId], references: [id])
+  userId       String
+  config       RoomConfig[]
+  status       RoomStatus    @default(WAITING)
+  participants Participant[]
+  challenge    Challenge?
+  tokenPool    Int
+  createdAt    DateTime      @default(now()) @map("created_at")
+  roomChat     RoomChat?     @relation(fields: [roomChatId], references: [id]) // Define the relation here
+  roomChatId   String?       @unique
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model RoomChat {
+  id        String        @id @default(cuid())
+  roomId    String        @unique
+  messages  RoomMessage[]
+  createdAt DateTime      @default(now()) @map("created_at")
+  Room      Room?
+
+  @@index([roomId])
+}
+
+model RoomConfig {
+  id        String   @id @default(cuid())
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    String
+  key       String
+  value     String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([roomId])
+}
+
+model Participant {
+  id        String             @id @default(cuid())
+  user      User               @relation(fields: [userId], references: [id])
+  userId    String
+  room      Room               @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId    String
+  state     ParticipantState[]
+  createdAt DateTime           @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([roomId])
+}
+
+model ParticipantState {
+  id            String      @id @default(cuid())
+  participant   Participant @relation(fields: [participantId], references: [id])
+  participantId String
+  key           String
+  value         String
+  createdAt     DateTime    @default(now()) @map("created_at")
+
+  @@index([participantId])
+}
+
+model Challenge {
+  id          String     @id @default(cuid())
+  room        Room       @relation(fields: [roomId], references: [id])
+  roomId      String     @unique
+  title       String
+  description String
+  difficulty  String
+  testCases   TestCase[]
+  solutions   Solution[]
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  @@index([roomId])
+  @@index([createdAt])
+}
+
+model TestCase {
+  id          String    @id @default(cuid())
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+  challengeId String
+  input       String
+  output      String
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@index([challengeId])
+}
+
+model Solution {
+  id          String            @id @default(cuid())
+  challenge   Challenge         @relation(fields: [challengeId], references: [id])
+  challengeId String
+  user        User              @relation(fields: [userId], references: [id])
+  userId      String
+  content     SolutionContent[]
+  createdAt   DateTime          @default(now()) @map("created_at")
+
+  @@index([challengeId])
+  @@index([userId])
+}
+
+model SolutionContent {
+  id         String   @id @default(cuid())
+  solution   Solution @relation(fields: [solutionId], references: [id])
+  solutionId String
+  key        String
+  value      String
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@index([solutionId])
+}
+
+model Transaction {
+  id        String            @id @default(cuid())
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  amount    Int
+  type      TransactionType
+  status    TransactionStatus
+  createdAt DateTime          @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+enum RoomStatus {
+  WAITING
+  STARTED
+  FINISHED
+}
+
+enum MessageType {
+  ICON
+  IMAGE
+  VIDEO
+  TEXT
+  FILE
+}
+
+enum TransactionType {
+  PURCHASE
+  REDEEM
+  WINNER
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
