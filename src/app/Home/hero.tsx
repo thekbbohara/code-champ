@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const Hero = () => {
   return (
-    <section className="min-h-full h-[90vh] flex justify-between items-center">
+    <section className="min-h-full h-[90vh] flex flex-col-reverse sm:my-0 mt-6 mb-24 sm:flex-row  justify-between items-center">
       <div className="my-auto flex flex-col gap-4">
         <h1 className="font-bold text-[46px] leading-9 text-gray-200"><strong>Master Technical Interviews Through Real Competition</strong></h1>
         <h2 className="text-gray-400 font-medium">Practical coding challenges in real-time battles against other developers. Win tokens, build confidence, and land your dream job.</h2>

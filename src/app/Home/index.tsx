@@ -12,7 +12,7 @@ import Footer from "./footer";
 
 export default function Home() {
   return (
-    <main className="max-w-screen-lg mx-auto pb-16 min-h-full">
+    <main className="px-2 max-w-screen-lg mx-auto pb-16 min-h-full">
       <Nav />
       <Hero />
       <SellingPoint />

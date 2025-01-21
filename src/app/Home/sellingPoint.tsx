@@ -8,14 +8,14 @@ const SellingPoint = () => {
     <strong className="text-[2.5rem] font-semibold leading-8 text-gray-300">
       3 out of 4 developers fail technical inteviews <br /> due to lack of real-world practice
     </strong>
-    <div className='flex justify-evenly my-20'>
+    <div className='flex justify-evenly my-20 sm:flex-nowrap flex-wrap gap-8'>
       <div className='flex relative'>
         <p>Felling Overwhelmed by <br /> technical interviews</p>
-        <Image src={"/arrow.svg"} alt="->" width={50} height={50} className='absolute  select-none' style={{ right: "-55px", top: "-5px" }} />
+        <Image src={"/arrow.svg"} alt="->" width={50} height={50} className='absolute hidden lg:block select-none' style={{ right: "-55px", top: "-5px" }} />
       </div>
       <div className='flex relative'>
         <p>Struggling with time pressure during <br /> coding challenges</p>
-        <Image src={"/arrow.svg"} alt="->" width={50} height={50} className='absolute select-none' style={{ right: "-55px", top: "-10px" }} />
+        <Image src={"/arrow.svg"} alt="->" width={50} height={50} className='absolute hidden lg:block select-none' style={{ right: "-55px", top: "-10px" }} />
       </div>
       <p>Losing confidence after <br /> failed interviews</p>
     </div>
