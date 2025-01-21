@@ -11,11 +11,11 @@ const SellingPoint = () => {
     <div className='flex justify-evenly my-20'>
       <div className='flex relative'>
         <p>Felling Overwhelmed by <br /> technical interviews</p>
-        <Image src={"/arrow.svg"} alt="->" width={50} height={50} className='absolute  select-none' style={{ right: "-72px", top: "-5px" }} />
+        <Image src={"/arrow.svg"} alt="->" width={50} height={50} className='absolute  select-none' style={{ right: "-55px", top: "-5px" }} />
       </div>
       <div className='flex relative'>
         <p>Struggling with time pressure during <br /> coding challenges</p>
-        <Image src={"/arrow.svg"} alt="->" width={50} height={50} className='absolute select-none' style={{ right: "-72px", top: "-6px" }} />
+        <Image src={"/arrow.svg"} alt="->" width={50} height={50} className='absolute select-none' style={{ right: "-55px", top: "-10px" }} />
       </div>
       <p>Losing confidence after <br /> failed interviews</p>
     </div>
