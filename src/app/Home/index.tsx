@@ -21,7 +21,7 @@ export default function Home() {
       <Pricing />
       <FAQs />
       <Footer />
-      <Link href={'#top'} className="fixed bottom-6 right-6 bg-[#1e293b] h-12 w-12 flex justify-center items-center rounded-full"><Button className="bg-transparent"><ArrowUp className="bg-transparent" /></Button></Link>
+      <Link href={'#top'} className="fixed bottom-6 right-6 bg-[#1e293b] h-12 w-12 flex justify-center items-center rounded-full"><Button className="bg-transparent hover:bg-transparent"><ArrowUp className="bg-transparent hover:bg-transparent" /></Button></Link>
     </main>
   );
 }
