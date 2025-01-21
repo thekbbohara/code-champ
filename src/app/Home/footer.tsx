@@ -2,9 +2,9 @@ import { CodeChamp } from "@/components/common/codeChamp"
 import { Copyright, Github, XIcon, } from "lucide-react"
 
 const Footer = () => {
-  return (<footer className="border border-transparent  border-t-gray-600 mt-20 flex justify-between items-center">
-    <div>
-      <div className="flex gap-2 items-center">
+  return (<footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-fixed border border-transparent  border-t-gray-600  flex justify-between items-center">
+    <div className="">
+      <div className="flex gap-2 items-center ">
         <CodeChamp />
         <h1 className="text-gray-200 font-bold lowercase text-[20px]">Code champ</h1>
       </div>

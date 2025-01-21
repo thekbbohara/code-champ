@@ -35,6 +35,7 @@ const FAQs = () => {
           <AccordionContent className="text-gray-400 font-medium">{answer}</AccordionContent>
         </AccordionItem>)}
     </Accordion>
+
   </section>)
 }
 export default FAQs;
