@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full">
-      <body className="bg-black font-mono text-white h-full min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-fixed ">
+      <body className="isolate font-mono text-white h-full min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-fixed ">
         <AuthProvider>
           {children}
         </AuthProvider>
