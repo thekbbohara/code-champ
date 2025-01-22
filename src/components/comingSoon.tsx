@@ -114,7 +114,7 @@ export function ComingSoon({ userEmail }: { userEmail: string }) {
         {/* Beta badge */}
         <div className="flex items-center gap-0 mb-8">
           <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-50 to-gray-100">
-            Codechamp
+            Codearena
           </span>
           <span className="px-2 py-1 rounded-full bg-gray-800/30 text-gray-400 text-xs">
             Beta
@@ -195,10 +195,10 @@ export function ComingSoon({ userEmail }: { userEmail: string }) {
           If you have any questions, please contact us at:
           <br />
           <a
-            href="mailto:contact@codechamp.com"
+            href="mailto:thekbbohara@gmail.com"
             className="text-gray-300 hover:text-gray-200 transition-colors"
           >
-            contact@codechamp.com
+            contact@codearena.pro
           </a>
         </p>
 
@@ -217,7 +217,7 @@ export function ComingSoon({ userEmail }: { userEmail: string }) {
 
         {/* Footer */}
         <footer className="text-gray-500 text-sm">
-          © 2025 Codechamp, All rights reserved.
+          © 2025 Codearena, All rights reserved.
         </footer>
       </div>
     </main>
