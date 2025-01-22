@@ -11,8 +11,8 @@ import {
 import { Github } from "lucide-react";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
-import { CodeChamp } from "@/components/common/codeChamp";
 import { useRouter } from "next/navigation";
+import { Codearena } from "@/components/common/Codearena";
 
 export default function Auth() {
   const { status } = useSession();
@@ -24,8 +24,8 @@ export default function Auth() {
       <nav className=" ">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
-            <CodeChamp />
-            <span className="text-xl font-bold">Code champ</span>
+            <Codearena />
+            <span className="text-xl font-bold">Codearena</span>
           </Link>
         </div>
       </nav>
@@ -35,7 +35,7 @@ export default function Auth() {
           <CardHeader className="text-center">
             <CardTitle className="text-gray-200 font-bold">Well come </CardTitle>
             <CardDescription className="text-gray-400 font-semibold">
-              Auth into your codechamp account
+              Auth into your codearena.
             </CardDescription>
           </CardHeader>
           <CardContent>

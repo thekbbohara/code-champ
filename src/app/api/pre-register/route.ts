@@ -1,5 +1,17 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
+
+// Configure nodemailer transporter
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT),
+  secure: true,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASSWORD,
+  },
+});
 
 export async function POST(request: Request) {
   try {
@@ -11,6 +23,28 @@ export async function POST(request: Request) {
     const user = await prisma.user.update({
       where: { email },
       data: { isPreRegistered: true },
+    });
+
+    // Send thank you email
+    await transporter.sendMail({
+      from: "thekbbohara@gmail.com",
+      to: email,
+      subject: "Welcome to CodeArena - Thank You for Pre-registering!",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h1 style="color: #6d28d9;">Welcome to CodeArena!</h1>
+          <p>Thank you for pre-registering with CodeArena. We're excited to have you join our community of developers!</p>
+          <p>You're now part of an exclusive group who will be first to experience our innovative coding platform when we launch. We're building something special, and your early interest means a lot to us.</p>
+          <p>Here's what you can expect:</p>
+          <ul>
+            <li>Early access to our platform</li>
+            <li>Special perks for pre-registered members</li>
+            <li>Regular updates on our development progress</li>
+          </ul>
+          <p>We'll notify you as soon as CodeArena is ready to welcome you in. Get ready to level up your coding journey!</p>
+          <p>Best regards,<br>The CodeArena Team</p>
+        </div>
+      `,
     });
 
     return NextResponse.json({ success: true, user });
