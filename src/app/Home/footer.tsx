@@ -14,7 +14,7 @@ const Footer = () => {
     </div>
     <div className="flex gap-4">
       <a href="https://x.com/thekbbohara" className="bg-[#1e293b] w-8 h-8 rounded-[1px] flex items-center justify-center p-2 "><XIcon className="bg-transparent" /></a>
-      <a href="https://github.com/thekbbohara/code-champ" className="bg-[#1e293b] w-8 h-8 rounded-[1px] flex items-center justify-center p-2"><Github className="bg-transparent text-white" /></a>
+      <a href="https://github.com/thekbbohara/codearena.pro" className="bg-[#1e293b] w-8 h-8 rounded-[1px] flex items-center justify-center p-2"><Github className="bg-transparent text-white" /></a>
     </div>
   </footer>)
 }
