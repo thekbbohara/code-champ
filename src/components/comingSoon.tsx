@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send, Twitter, Instagram } from "lucide-react";
@@ -23,7 +23,7 @@ export function ComingSoon({ userEmail }: { userEmail: string }) {
   const launchDate = new Date("2025-02-17T00:00:00").getTime();
 
   // Check if the user is pre-registered
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!email) return;
     const checkPreRegistration = async () => {
       try {
