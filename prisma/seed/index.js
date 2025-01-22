@@ -83,8 +83,6 @@ async function main() {
       },
     },
   });
-
-  console.log("Basic seed data created");
 }
 
 main()
