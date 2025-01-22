@@ -1,6 +1,7 @@
 [x] Landing Page.
-[ ] Auth with github
-[ ] comming_soon page + pre-register -> get free token to pre-registered user on prod relese day.
+[x] Auth with github
+[x] comming_soon page + pre-register -> get free token to pre-registered user on prod relese day.
+[ ] Homepage for authenticated user.
 [ ] Token Management / billing
 [ ] Create challenge room // supported language ["js"]
 [ ] Generate challenge // automatically generate challenge according to room config
