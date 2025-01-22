@@ -3,10 +3,10 @@ import "./globals.css";
 import { AuthProvider } from "./auth/auth-provider";
 
 export const metadata: Metadata = {
-  title: "Code champ",
-  description: "A competitive coding platform for coding chads.",
+  title: "Codearena",
+  description: "A competitive coding arena for coding chads to battle and hangout.",
 };
-
+// its basically leetcode but with risk and reward, prepare for real life coding interviews where you have to win against other candidates.
 export default function RootLayout({
   children,
 }: Readonly<{
