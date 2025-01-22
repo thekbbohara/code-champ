@@ -1,12 +1,12 @@
-import { CodeChamp } from "@/components/common/codeChamp"
+import { Codearena } from "@/components/common/Codearena"
 import { Copyright, Github, XIcon, } from "lucide-react"
 
 const Footer = () => {
   return (<footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-fixed border border-transparent  border-t-gray-600  flex justify-between items-center">
     <div className="">
       <div className="flex gap-2 items-center ">
-        <CodeChamp />
-        <h1 className="text-gray-200 font-bold lowercase text-[20px]">Code champ</h1>
+        <Codearena />
+        <h1 className="text-gray-200 font-bold lowercase text-[20px]">Codearena</h1>
       </div>
       <div className="pl-2 flex justify-start items-center gap-2">
         <span>Copyright</span><Copyright size={12} /><span>2025</span>

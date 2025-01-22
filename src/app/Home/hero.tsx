@@ -1,4 +1,4 @@
-import { CodeChamp } from "@/components/common/codeChamp"
+import { Codearena } from "@/components/common/Codearena"
 import Link from "next/link"
 
 const Hero = () => {
@@ -12,7 +12,7 @@ const Hero = () => {
           Start Competing
         </Link>
       </div>
-      <CodeChamp height={250} width={350} className="sm:my-0 my-4" />
+      <Codearena height={250} width={350} className="sm:my-0 my-4" />
     </section>
   )
 }

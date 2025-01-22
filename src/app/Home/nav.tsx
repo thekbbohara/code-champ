@@ -1,12 +1,12 @@
-import { CodeChamp } from "@/components/common/codeChamp"
+import { Codearena } from "@/components/common/Codearena"
 import Link from "next/link"
 
 const Nav = () => {
   return <header className="w-full flex justify-between items-center" id="top">
     <nav className="flex gap-8 items-center" id="nav">
       <div className="flex gap-2 items-center">
-        <CodeChamp />
-        <h1 className="text-gray-200 font-bold lowercase text-[20px]">Code champ</h1>
+        <Codearena />
+        <h1 className="text-gray-200 font-bold lowercase text-[20px]">Codearena</h1>
       </div>
       <ul className="sm:flex list-none gap-6 text-gray-400 hidden">
         <li><a href="#features">Features</a></li>

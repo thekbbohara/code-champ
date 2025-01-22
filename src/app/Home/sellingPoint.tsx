@@ -3,7 +3,7 @@ import Image from 'next/image';
 const SellingPoint = () => {
   return <section className='text-center'>
     <h3 className="text-[3.5rem] font-bold mb-12 text-gray-200">
-      Why Code Champ ?
+      Why Codearena ?
     </h3>
     <strong className="text-[2.5rem] font-semibold leading-8 text-gray-300">
       3 out of 4 developers fail technical inteviews <br /> due to lack of real-world practice
