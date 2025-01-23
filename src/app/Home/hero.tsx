@@ -9,7 +9,7 @@ const Hero = () => {
         <h2 className="text-gray-400 font-medium ">Practical coding challenges in real-time battles against other developers. Win tokens, build confidence, and land your dream job.</h2>
 
         <Link href={"/auth"} className=" w-fit bg-white px-3 py-2 rounded-md font-semibold text-gray-700" >
-          Start Competing
+          Preregister
         </Link>
       </div>
       <Codearena height={250} width={350} className="sm:my-0 my-4" />
