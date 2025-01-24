@@ -62,7 +62,7 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const email = searchParams.get("email");
-
+    //console.log(email);
     if (!email) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
@@ -70,6 +70,7 @@ export async function GET(request: Request) {
     const user = await prisma.user.findUnique({
       where: { email },
     });
+    //console.log("user", user);
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
