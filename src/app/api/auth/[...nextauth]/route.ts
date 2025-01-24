@@ -2,10 +2,10 @@ import prisma from "@/lib/prisma";
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 
-const { SECRET, GH_CLIENT_ID, GH_CLIENT_SECRET } = process.env;
+const { NEXTAUTH_SECRET, GH_CLIENT_ID, GH_CLIENT_SECRET } = process.env;
 
 const handler = NextAuth({
-  secret: SECRET,
+  secret: NEXTAUTH_SECRET,
   providers: [
     GithubProvider({
       clientId: GH_CLIENT_ID!,
@@ -61,6 +61,7 @@ const handler = NextAuth({
         session.user.id = String(token.id || "");
         session.user.name = token.name || "";
         session.user.email = token.email || "";
+        session.user.username = (token.username as string) || "";
         session.user.avatar_url = token.picture || "";
       }
       return session;
