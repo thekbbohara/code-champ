@@ -1,35 +1,39 @@
-import { NextResponse } from 'next/server';
-import prisma from '@/lib/prisma';
+import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
+import { excludeFields } from "@/lib/utils";
 
 // GET /api/users/[username]
 export async function GET(
   _: Request,
-  { params }: { params: Promise<{ username: string }> }
+  { params }: { params: Promise<{ username: string }> },
 ) {
   const { username } = await params;
+  console.log({ username });
   try {
     const user = await prisma.user.findUnique({
       where: { username },
     });
 
     if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json(user);
+    const userWithoutPassword = excludeFields(user, ["password"]);
+
+    return NextResponse.json(userWithoutPassword);
   } catch (error) {
-    console.error('Error fetching user:', error);
+    console.error("Error fetching user:", error);
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }
 
-// PATCH /api/users/[username] 
+// PATCH /api/users/[username]
 export async function PATCH(
   request: Request,
-  { params }: { params: Promise<{ username: string }> }
+  { params }: { params: Promise<{ username: string }> },
 ) {
   const { username } = await params;
   try {
@@ -65,10 +69,10 @@ export async function PATCH(
 
     return NextResponse.json(updatedUser);
   } catch (error) {
-    console.error('Error updating user:', error);
+    console.error("Error updating user:", error);
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: "Internal server error" },
+      { status: 500 },
     );
   }
 }
