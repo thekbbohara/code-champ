@@ -1,23 +1,40 @@
+'use client';
+
 import { Codearena } from "@/components/common/Codearena"
 import Link from "next/link"
 
-const Nav = () => {
-  return <header className="w-full flex justify-between items-center" id="top">
-    <nav className="flex gap-8 items-center" id="nav">
-      <div className="flex gap-2 items-center">
-        <Codearena />
-        <h1 className="text-gray-200 font-bold lowercase text-[20px]">Codearena</h1>
-      </div>
-      <ul className="sm:flex list-none gap-6 text-gray-400 hidden">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#faqs">FAQs</a></li>
-      </ul>
-    </nav>
-    <Link href={"/auth"} className="w-fit bg-white px-3 py-2 rounded-md font-semibold text-gray-700" >
-      Get Started
-    </Link>
-  </header>
-}
+export default function Nav() {
+  return (
+    <nav className="border-b border-gray-700 bg-gray-900/60 backdrop-blur-sm sticky top-0 z-50">
+      <div className="max-w-screen-lg mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center space-x-8">
+            <Link href="/" className="text-xl font-bold text-white flex gap-1">
+              <Codearena width={30} height={30} />
+              <span>CodeArena</span>
+            </Link>
 
-export default Nav
+            <div className="hidden md:flex space-x-6">
+              <Link href="#features" className="text-gray-400 hover:text-white transition-colors">
+                Features
+              </Link>
+              <Link href="#pricing" className="text-gray-400 hover:text-white transition-colors">
+                Pricing
+              </Link>
+              <Link href="#faqs" className="text-gray-400 hover:text-white transition-colors">
+                FAQs
+              </Link>
+            </div>
+          </div>
+
+          <Link
+            href="/auth"
+            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-4 py-2 rounded-md font-semibold transition-colors"
+          >
+            Get Started
+          </Link>
+        </div>
+      </div>
+    </nav>
+  )
+}

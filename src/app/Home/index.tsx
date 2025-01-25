@@ -5,7 +5,6 @@ import Link from "next/link";
 import FAQs from "./faq";
 import Feature from "./feature";
 import Hero from "./hero";
-import Nav from "./nav";
 import Paths from "./paths";
 import Pricing from "./pricing";
 import SellingPoint from "./sellingPoint";
@@ -14,7 +13,6 @@ import Footer from "./footer";
 export default function Home() {
   return (
     <>
-      <Nav />
       <Hero />
       {/* Parent Element */}
       <section className="relative ">

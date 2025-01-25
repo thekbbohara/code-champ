@@ -36,6 +36,7 @@ export default function ProfilePage({ params }: { params: Promise<{ username: st
         },
         body: JSON.stringify(editedProfile),
       });
+      console.log({ response })
 
       if (response.ok) {
         const updatedProfile = await response.json();
