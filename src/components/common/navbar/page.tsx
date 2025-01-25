@@ -12,13 +12,19 @@ export function Navbar() {
   const pathname = usePathname();
   const { user } = useAuth();
   const { status } = useSession()
-
   const isActive = (path: string) => {
     return pathname === path ? 'text-white' : 'text-gray-400 hover:text-white';
   };
 
-  if (status === "loading") { 
-    return <nav className="border-b border-gray-700 bg-gray-900/60 backdrop-blur-sm sticky top-0 z-50"></nav> 
+  // Array of routes where navbar should be hidden
+  const hiddenRoutes = ['/auth', '/arena/battle']; // Add more routes as needed
+
+  if (hiddenRoutes.includes(pathname)) {
+    return null;
+  }
+
+  if (status === "loading") {
+    return <nav className="border-b border-gray-700 bg-gray-900/60 backdrop-blur-sm sticky top-0 z-50"></nav>
   }
 
   return (
@@ -79,8 +85,8 @@ export function Navbar() {
               </Link>
             </div>
           ) : (
-            <Link 
-              href="/auth" 
+            <Link
+              href="/auth"
               className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-4 py-2 rounded-md font-semibold transition-colors"
             >
               Get Started
