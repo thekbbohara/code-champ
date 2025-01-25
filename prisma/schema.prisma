@@ -173,13 +173,13 @@ model RoomConfig {
 }
 
 model Participant {
-  id        String           @id @default(cuid())
-  user      User             @relation(fields: [userId], references: [id])
+  id        String   @id @default(cuid())
   userId    String
-  room      Room             @relation(fields: [roomId], references: [id], onDelete: Cascade)
   roomId    String
-  state     ParticipantState @default(READY)
-  createdAt DateTime         @default(now()) @map("created_at")
+  state     String   @default("NOT_READY")
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  room      Room     @relation(fields: [roomId], references: [id])
 
   @@index([userId])
   @@index([roomId])

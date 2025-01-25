@@ -5,16 +5,28 @@ import { CreateArena } from './components/createarena';
 import { useAuth } from '@/hooks/use-auth';
 import { getUserArenas } from './_store/_api';
 import { useQuery } from '@tanstack/react-query';
-import { Room } from '@prisma/client';
 import Link from 'next/link';
 
+import { type Room, type RoomConfig, type RoomMessage, type User } from '@prisma/client';
+
+type RoomWithRelations = Room & {
+  config: RoomConfig[];
+  createdBy: User;
+  roomChat?: {
+    messages: (RoomMessage & {
+      user: User;
+    })[];
+  };
+};
+
 export default function ArenaHome() {
-  const { user } = useAuth()
-  const { data: rooms, isLoading, isError } = useQuery({
-    queryKey: ["userArenas", user?.id], // Include user ID in the query key
+  const { user } = useAuth();
+  const { data: rooms, isLoading, isError } = useQuery<RoomWithRelations[]>({
+    queryKey: ["userArenas", user?.id],
     queryFn: () => getUserArenas({ userId: String(user?.id) }),
-    enabled: !!user, // Only run the query if the user is not null
+    enabled: !!user,
   });
+
   return (
     <div className="min-h-screen ">
       <div className="container mx-auto p-4 pb-16">
@@ -53,20 +65,20 @@ export default function ArenaHome() {
 
             {rooms && rooms.length >= 1 && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
-                {rooms.map((room: Room) => (
+                {rooms.map((room) => (
                   <Link href={`/arena/${room.id}`} key={room.id} className="p-6 bg-gray-800 rounded-lg">
                     <h3 className="text-xl font-bold text-white mb-2">{room.title}</h3>
                     <sup>Status: {room.status}</sup>
                     <div className="text-gray-400 space-y-1">
                       <p>Entry Tokens: {room.entryToken}</p>
-                      <p>{room.config.find(c => c.key === 'playerMode')?.value}: {room.config.find(c => c.key === 'language')?.value}</p>
+                      <p>{room.config.find((c: RoomConfig) => c.key === 'playerMode')?.value}: {room.config.find((c: RoomConfig) => c.key === 'language')?.value}</p>
                     </div>
                   </Link>
                 ))}
               </div>
             )}
 
-            {isError || rooms && rooms.length == 0 && (
+            {(isError || (rooms && rooms.length === 0)) && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
                 <div className="p-6 bg-gray-800 rounded-lg">
                   <h3 className="text-xl font-bold text-white mb-2">Real-time Battles</h3>

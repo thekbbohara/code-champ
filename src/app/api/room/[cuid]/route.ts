@@ -1,8 +1,11 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(_: Request, { params }: { params: { cuid: string } }) {
-  const { cuid } = params;
+export async function GET(
+  _: Request,
+  { params }: { params: Promise<{ cuid: string }> },
+) {
+  const { cuid } = await params;
 
   try {
     const room = await prisma.room.findUnique({
@@ -13,8 +16,7 @@ export async function GET(_: Request, { params }: { params: { cuid: string } }) 
         participants: {
           include: {
             user: true,
-            state: true
-          }
+          },
         },
         challenge: {
           include: {
@@ -22,21 +24,21 @@ export async function GET(_: Request, { params }: { params: { cuid: string } }) 
             solutions: {
               include: {
                 content: true,
-                user: true
-              }
-            }
-          }
+                user: true,
+              },
+            },
+          },
         },
         roomChat: {
           include: {
             messages: {
               include: {
-                user: true
-              }
-            }
-          }
-        }
-      }
+                user: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (!room) {
@@ -48,7 +50,7 @@ export async function GET(_: Request, { params }: { params: { cuid: string } }) 
     console.error("Error fetching room:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

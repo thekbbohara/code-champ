@@ -6,12 +6,26 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { getArena } from '../_store/_api';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { type Room } from '@prisma/client';
+import { type Room, type RoomConfig, type RoomMessage, type Participant, type User } from '@prisma/client';
 import { Skeleton } from '@/components/ui/skeleton';
+
+type RoomWithRelations = Room & {
+  config: RoomConfig[];
+  participants: (Participant & {
+    user: User;
+  })[];
+  createdBy: User;
+  roomChat?: {
+    messages: (RoomMessage & {
+      user: User;
+    })[];
+  };
+};
+
 
 export default function ArenaRoom({ params }: { params: Promise<{ cuid: string }> }) {
   const [message, setMessage] = useState('');
-  const [room, setRoom] = useState<Room | null>(null);
+  const [room, setRoom] = useState<RoomWithRelations | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { cuid } = use(params)
@@ -102,7 +116,7 @@ export default function ArenaRoom({ params }: { params: Promise<{ cuid: string }
       </div>
     </div>
   );
-  
+
   if (error) return <div>{error}</div>;
   if (!room) return <div>Room not found</div>;
 
@@ -110,10 +124,10 @@ export default function ArenaRoom({ params }: { params: Promise<{ cuid: string }
     const config = room.config.find(c => c.key === key);
     return config?.value || '';
   };
-
-  const getParticipantState = (participant: Room['participants'][0], key: string) => {
-    return participant.state.find(s => s.key === key)?.value === 'true';
-  };
+  //
+  //const getParticipantState = (participant: Participant, key: string) => {
+  //  return participant.state.find(s => s.key === key)?.value === 'true';
+  //};
 
   return (
     <div className="min-h-screen">
@@ -154,8 +168,8 @@ export default function ArenaRoom({ params }: { params: Promise<{ cuid: string }
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-gray-600 rounded-full">
                       <Avatar>
-                        <AvatarImage src={room.createdBy.avatarUrl} alt='avatar' />
-                        <AvatarFallback>{room.createdBy.name.slice(0, 2)}</AvatarFallback>
+                        <AvatarImage src={String(room?.createdBy?.avatarUrl)} alt='avatar' />
+                        <AvatarFallback>{String(room?.createdBy?.name).slice(0, 2)}</AvatarFallback>
                       </Avatar>
                     </div>
                     <span className="text-white">{room.createdBy.name}</span>
@@ -169,15 +183,15 @@ export default function ArenaRoom({ params }: { params: Promise<{ cuid: string }
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-gray-600 rounded-full">
                         <Avatar>
-                          <AvatarImage src={participant.avatarUrl} alt='avatar' />
-                          <AvatarFallback>{participant.name.slice(0, 2)}</AvatarFallback>
+                          <AvatarImage src={String(participant?.user?.avatarUrl)} alt='avatar' />
+                          <AvatarFallback>{String(participant.user.name).slice(0, 2)}</AvatarFallback>
                         </Avatar>
 
                       </div>
                       <span className="text-white">{participant.user.name}</span>
                     </div>
-                    <span className={`px-2 py-1 rounded text-sm ${getParticipantState(participant, 'ready') ? 'bg-green-600' : 'bg-yellow-600'}`}>
-                      {getParticipantState(participant, 'ready') ? 'Ready' : 'Not Ready'}
+                    <span className={`px-2 py-1 rounded text-sm ${participant.state == "ready" ? 'bg-green-600' : 'bg-yellow-600'}`}>
+                      {participant.state ? 'Ready' : 'Not Ready'}
                     </span>
                   </div>
                 ))}
@@ -216,6 +230,6 @@ export default function ArenaRoom({ params }: { params: Promise<{ cuid: string }
         </div>
 
       </div>
-    </div>
+    </div >
   );
 }
