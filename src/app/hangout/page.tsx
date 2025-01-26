@@ -333,5 +333,6 @@
 
 
 export default function HangoutArea() {
-  return <section>Hangout area</section>
+  //return <section>Just go and watch some movie or build it yourself it&apos;s on github</section>
+  return <section>Just go find yourself a girlfriend.</section>
 }
