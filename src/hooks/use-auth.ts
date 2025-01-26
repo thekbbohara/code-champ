@@ -7,14 +7,18 @@ import { useEffect } from "react";
 
 export const useAuth = () => {
   const { data, status } = useSession();
-  const { user, setUser } = useAuthStore();
+  const { user, setUser, authStatus, setAuthStatus } = useAuthStore();
 
   useEffect(() => {
     // Check if the session is loading or if the user is already set
     if (status === "loading" || user) return;
+    if (status === "unauthenticated") {
+      setAuthStatus("unauthenticated");
+    }
 
     const fetchUserData = async () => {
       if (data?.user.username) {
+        setAuthStatus("authenticated");
         try {
           const { data: response } = await getUserData({
             username: data.user.username,
@@ -27,7 +31,7 @@ export const useAuth = () => {
     };
 
     fetchUserData();
-  }, [status, data, user, setUser]);
+  }, [status, data, user, setUser, authStatus, setAuthStatus]);
 
-  return { status, user };
+  return { status: authStatus, user };
 };

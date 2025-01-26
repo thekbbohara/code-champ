@@ -17,6 +17,10 @@ interface AuthState {
   setUser: (user: User) => void; // Allows partial updates to the user
   updateUser: (updates: Partial<User>) => void; // Allows partial updates to the user
   updateTokens: (tokens: number) => void; // Specifically for updating tokens
+  authStatus: "loading" | "authenticated" | "unauthenticated";
+  setAuthStatus: (
+    authStatus: "loading" | "authenticated" | "unauthenticated",
+  ) => void;
   //setAuthToken: (authToken: string) => void;
 }
 
@@ -29,7 +33,8 @@ const useAuthStore = create<AuthState>((set) => ({
   //  setEncryptedLocalStorage(encryptedKey, encryptedValue);
   //  return set({ authToken: authToken });
   //},
-
+  authStatus: "loading",
+  setAuthStatus: (authStatus) => set({ authStatus }),
   user: null,
 
   setUser: (user) => set({ user }),
