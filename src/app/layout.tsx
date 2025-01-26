@@ -20,7 +20,7 @@ export default function RootLayout({
         <AuthProvider>
           <Providers>
             <Navbar />
-            <main className="px-2 max-w-screen-lg mx-auto pb-8 h-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-fixed">
+            <main className="px-2 max-w-[1200px] mx-auto pb-8 h-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 bg-fixed">
               {children}
             </main>
           </Providers>
