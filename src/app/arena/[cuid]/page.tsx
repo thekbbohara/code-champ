@@ -9,6 +9,8 @@ import { getArena } from '../_store/_api';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 import { type Room, type RoomConfig, type RoomMessage, type Participant, type User } from '@prisma/client';
+import { useParams } from 'next/navigation';
+
 
 type RoomWithRelations = Room & {
   config: RoomConfig[];
@@ -17,9 +19,10 @@ type RoomWithRelations = Room & {
   roomChat?: { messages: (RoomMessage & { user: User })[] };
 };
 
-export default function ArenaRoom({ params }: { params: { cuid: string } }) {
+export default function ArenaRoom() {
   const [message, setMessage] = useState('');
-  const { cuid } = params;
+  const params = useParams();
+  const cuid = params.cuid as string;
   // Fetch room data using React Query
   const { data: room, isLoading, isError } = useQuery<RoomWithRelations>({
     queryKey: ['arena', cuid],
