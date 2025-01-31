@@ -1,8 +1,6 @@
-
-
 'use client';
 
-import { Usable, use, useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,10 +17,9 @@ type RoomWithRelations = Room & {
   roomChat?: { messages: (RoomMessage & { user: User })[] };
 };
 
-export default function ArenaRoom({ params }: { params: Usable<{ cuid: string }> }) {
+export default function ArenaRoom({ params }: { params: { cuid: string } }) {
   const [message, setMessage] = useState('');
-  const { cuid }: { cuid: string } = use(params)
-
+  const { cuid } = params;
   // Fetch room data using React Query
   const { data: room, isLoading, isError } = useQuery<RoomWithRelations>({
     queryKey: ['arena', cuid],
