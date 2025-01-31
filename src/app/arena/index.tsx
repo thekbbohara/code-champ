@@ -37,7 +37,7 @@ export default function ArenaHome() {
             <Codearena width={256} height={256} />
           </div>
 
-          {!isLoading && !rooms || isError &&
+          {!isLoading && rooms?.length == 0 || isError &&
             <div className="flex flex-col items-center justify-center space-y-8 text-center">
 
               {/* Heading */}
