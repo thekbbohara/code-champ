@@ -30,29 +30,34 @@ export default function ArenaHome() {
   return (
     <div className="min-h-screen ">
       <div className="container mx-auto p-4 pb-16">
-        <div className="flex flex-col items-center justify-center space-y-8 text-center">
+
+        <div className="flex flex-col items-center justify-center space-y-2 text-center">
           {/* Logo */}
           <div className="relative w-64 h-64">
             <Codearena width={256} height={256} />
           </div>
 
-          {/* Heading */}
-          <h1 className="text-5xl font-bold text-white">
-            Welcome to CodeArena
-          </h1>
+          {!isLoading && !rooms &&
+            <div className="flex flex-col items-center justify-center space-y-8 text-center">
 
-          {/* Subheading */}
-          <p className="text-2xl text-gray-300 max-w-2xl">
-            It&apos;s Time For Battle
-          </p>
+              {/* Heading */}
+              <h1 className="text-5xl font-bold text-white">
+                Welcome to CodeArena
+              </h1>
 
-          {/* Create Arena Button */}
-          <CreateArena />
+              {/* Subheading */}
+              <p className="text-2xl text-gray-300 max-w-2xl">
+                It&apos;s Time For Battle
+              </p>
 
+              {/* Create Arena Button */}
+              <CreateArena />
+            </div>
+          }
           {/* Rooms Grid */}
           <div className="w-full">
             {isLoading && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
                 {[1, 2, 3].map((i) => (
                   <div key={i} className="p-6 bg-gray-800 rounded-lg animate-pulse">
                     <div className="h-6 bg-gray-700 rounded mb-4"></div>
@@ -64,7 +69,7 @@ export default function ArenaHome() {
             )}
 
             {rooms && rooms.length >= 1 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
                 {rooms.map((room) => (
                   <Link href={`/arena/${room.id}`} key={room.id} className="p-6 bg-gray-800 rounded-lg">
                     <h3 className="text-xl font-bold text-white mb-2">{room.title}</h3>
@@ -75,6 +80,9 @@ export default function ArenaHome() {
                     </div>
                   </Link>
                 ))}
+                <div className="p-6 bg-gray-800 rounded-lg flex justify-center items-center">
+                  <CreateArena trigger={"card"} />
+                </div>
               </div>
             )}
 
@@ -96,7 +104,7 @@ export default function ArenaHome() {
             )}
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }

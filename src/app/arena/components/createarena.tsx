@@ -15,7 +15,7 @@ import { createArena } from '../_store/_api';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 
-export function CreateArena() {
+export function CreateArena({ trigger = "button" }: { trigger?: "card" | "button" }) {
   const [roomName, setRoomName] = useState('');
   const [playerMode, setPlayerMode] = useState('1v1');
   const [tokens, setTokens] = useState("1.5");
@@ -129,12 +129,20 @@ export function CreateArena() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
+        {trigger === "button" ? <Button
           size="lg"
           className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 text-xl"
         >
           Create Arena
-        </Button>
+        </Button> : <div className="p-6 bg-gray-800 rounded-lg flex flex-col gap-2 justify-between items-center">
+          <h1 className="text-2xl font-bold text-gray-400">
+            It&apos;s Time For Battle
+          </h1>
+          <Button variant={"outline"} className='bg-transparent hover:bg-transparent hover:text-white text-xl w-fit'>
+            Create Arena
+          </Button>
+        </div>
+        }
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] bg-gray-900 text-white">
         <DialogHeader>
