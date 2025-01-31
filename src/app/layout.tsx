@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "./auth/auth-provider";
 import Providers from "@/lib/providers";
-import { Navbar } from "@/components/common/navbar/page";
+import { Navbar } from "@/components/common/navbar";
 
 export const metadata: Metadata = {
   title: "Codearena",
