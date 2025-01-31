@@ -135,7 +135,7 @@ export function CreateArena({ trigger = "button" }: { trigger?: "card" | "button
         >
           Create Arena
         </Button> : <div className="p-6 bg-gray-800 rounded-lg flex flex-col gap-2 justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-400">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-400">
             It&apos;s Time For Battle
           </h1>
           <Button variant={"outline"} className='bg-transparent hover:bg-transparent hover:text-white text-xl w-fit'>
