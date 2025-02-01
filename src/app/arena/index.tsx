@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 
 import { type Room, type RoomConfig, type RoomMessage, type User } from '@prisma/client';
+import { Button } from '@/components/ui/button';
 
 type RoomWithRelations = Room & {
   config: RoomConfig[];
@@ -29,6 +30,13 @@ export default function ArenaHome() {
 
   return (
     <div className="min-h-screen ">
+      <div className='ml-auto mt-3 w-fit'>
+        <Link href="/join"
+          className="hover:bg-gradient-to-r hover:from-purple-600 hover:to-blue-600 border hover:border-transparent  text-white px-2 py-1 text-xl rounded-sm  duration-300 transition-all"
+        >
+          Join Arena
+        </Link>
+      </div>
       <div className="container mx-auto p-4 pb-16">
 
         <div className="flex flex-col items-center justify-center space-y-2 text-center">
