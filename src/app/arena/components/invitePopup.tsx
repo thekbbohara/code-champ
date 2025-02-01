@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input"; // Using Input instead of Search
 import { CopyIcon } from "lucide-react";
 

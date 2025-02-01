@@ -8,7 +8,6 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 
 import { type Room, type RoomConfig, type RoomMessage, type User } from '@prisma/client';
-import { Button } from '@/components/ui/button';
 
 type RoomWithRelations = Room & {
   config: RoomConfig[];
